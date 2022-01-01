@@ -1,19 +1,21 @@
-package com.example.liriklagu
+package com.example.liriklagu.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
+import com.example.liriklagu.R
 import com.example.liriklagu.databinding.ActivityLyricBinding
 import com.example.liriklagu.viewmodel.LyricViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LyricActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLyricBinding
-    private lateinit var lyricViewModel: LyricViewModel
+    private val lyricViewModel: LyricViewModel by viewModels()
 
     lateinit var id: String
 
@@ -30,7 +32,6 @@ class LyricActivity : AppCompatActivity() {
         binding = ActivityLyricBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setViewModel()
         getData()
     }
 
@@ -57,7 +58,4 @@ class LyricActivity : AppCompatActivity() {
         })
     }
 
-    private fun setViewModel() {
-        lyricViewModel = ViewModelProvider(this).get(LyricViewModel::class.java)
-    }
 }

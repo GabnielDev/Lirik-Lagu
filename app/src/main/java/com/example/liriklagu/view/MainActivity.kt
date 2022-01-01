@@ -1,27 +1,27 @@
-package com.example.liriklagu
+package com.example.liriklagu.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.SearchView
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.liriklagu.R
 import com.example.liriklagu.adapter.HotAdapter
 import com.example.liriklagu.data.DataItem
 import com.example.liriklagu.databinding.ActivityMainBinding
 import com.example.liriklagu.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), HotAdapter.OnItemClickCallback {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel by viewModels()
     private lateinit var hotAdapter: HotAdapter
 
     private var loading = false
@@ -34,9 +34,7 @@ class MainActivity : AppCompatActivity(), HotAdapter.OnItemClickCallback {
         setContentView(binding.root)
 
         setAdapter()
-        setViewModel()
         getData()
-
 
     }
 
@@ -54,10 +52,6 @@ class MainActivity : AppCompatActivity(), HotAdapter.OnItemClickCallback {
         }
     }
 
-    private fun setViewModel() {
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-    }
-
     private fun getLoading() {
         mainViewModel.getLoading().observe(this, {
             loading = it
@@ -65,8 +59,6 @@ class MainActivity : AppCompatActivity(), HotAdapter.OnItemClickCallback {
             else binding.progressCircular.visibility = GONE
         })
     }
-
-
 
     private fun showData() {
         mainViewModel.getHot().observe(this, {
